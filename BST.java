@@ -1,4 +1,7 @@
 package ADS;
+
+import com.sun.source.tree.Tree;
+
 class TreeNode{
     int val;
     TreeNode left,right;
@@ -17,8 +20,18 @@ public class BST {
         root = r_insert(root, 3);
         display(root);
         System.out.println();
+        if(search(root,5)){
+            System.out.println("Found");
+        }else {
+            System.out.println("Not found");
+        }
         root = delete(root,5);
         display(root);
+        if(search(root,5)){
+            System.out.println("Found");
+        }else {
+            System.out.println("Not found");
+        }
     }
 
     static TreeNode insert(TreeNode root, int x) {
@@ -81,6 +94,22 @@ public class BST {
             root.left=delete(root.left,root.val);
         }
         return root;
+    }
+
+    static boolean search(TreeNode root, int val){
+        if(root==null){
+            return false;
+        }
+        if(root.val==val){
+            return true;
+        }
+        if(root.val<val){
+            return search(root.right,val);
+        }
+        if(root.val>val){
+            return search(root.left,val);
+        }
+        return false;
     }
 
     private static int inorder_pre(TreeNode root) {
