@@ -1,5 +1,5 @@
 package ADS;
-
+import java.util.*;
 import com.sun.source.tree.Tree;
 
 class TreeNode{
@@ -17,21 +17,23 @@ public class BST {
         root = r_insert(root, 8);
         root = r_insert(root, 4);
         root = r_insert(root, 2);
-        root = r_insert(root, 3);
+        root = r_insert(root, 6);
         display(root);
-        System.out.println();
-        if(search(root,5)){
-            System.out.println("Found");
-        }else {
-            System.out.println("Not found");
-        }
-        root = delete(root,5);
-        display(root);
-        if(search(root,5)){
-            System.out.println("Found");
-        }else {
-            System.out.println("Not found");
-        }
+//        System.out.println();
+//        if(search(root,5)){
+//            System.out.println("Found");
+//        }else {
+//            System.out.println("Not found");
+//        }
+//        root = delete(root,5);
+//        display(root);
+//        if(search(root,5)){
+//            System.out.println("Found");
+//        }else {
+//            System.out.println("Not found");
+//        }
+        List<List<Integer>> levelorder=levelOrder(root);
+        System.out.println(levelorder);
     }
 
     static TreeNode insert(TreeNode root, int x) {
@@ -126,5 +128,28 @@ public class BST {
         display(root.left);
         System.out.println(root.val);
         display(root.right);
+    }
+    static List<List<Integer>> levelOrder(TreeNode root){
+        Queue<TreeNode> queue=new LinkedList<>();
+        List<List<Integer>> levelorder=new ArrayList<>();
+        if(root!=null) {
+            queue.offer(root);
+        }
+        while(!queue.isEmpty()){
+            int size= queue.size();
+            List<Integer> level=new ArrayList<>();
+            for(int i=0;i<size;i++){
+                TreeNode x=queue.poll();
+                level.add(x.val);
+                if(x.left!=null){
+                    queue.offer(x.left);
+                }
+                if(x.right!=null){
+                    queue.offer(x.right);
+                }
+            }
+            levelorder.add(level);
+        }
+        return levelorder;
     }
 }
